@@ -6,17 +6,17 @@ const conf = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
 // TOKEN
 const gitlabToken = conf.gitlabToken;
 const githubToken = conf.githubToken;
-// Iinitialize connections
+// Initialize connections
 const github = graphql.defaults({
     headers: {
         authorization: `token ${githubToken}`,
     },
 });
-// get list of emojis
+// Get list of emojis
 var emojisGitlab;
 var emojisGithub;
 
-// listen to topic
+// Listen to topic
 async function publish(message) {
     var emoji = message.emoji;
     var msg = message.msg;
@@ -27,12 +27,12 @@ async function publish(message) {
             console.log("get file:"+error.message)
         }
         try{
-        // if emoji is null, set default emoji as :speech_balloon:
+        // If emoji is null, set default emoji as :speech_balloon:
         if (emoji == null && msg != null) {
             emoji = 'speech_balloon'
         }
 
-        // if emoji is in json at gitlab.com
+        // If emoji is in json at gitlab.com
         if(!emojisGitlab.data[emoji]){
             emoji = 'computer'
         }
@@ -54,13 +54,13 @@ async function publish(message) {
         console.log("gitlab:"+error.message)
     }
     try{
-        // if emoji is in emojis and is not null
+        // If emoji is in emojis and is not null
         if (!emojisGithub.data[emoji]) {
             emoji = ':computer:';
         } else {
             emoji = ':' + emoji + ':';
         }
-        // send post request to github server
+        // Send post request to github server
         github(`mutation changeUserStatus ($input: ChangeUserStatusInput!) {
             changeUserStatus (input: $input) {
             status {
@@ -84,12 +84,10 @@ async function publish(message) {
         console.log("github:"+error.message)
     }
 }
-// listen to time event every hour
+// Listen to time event every 5 minutes
 var CronJob = require('cron').CronJob;
-// every hour
 new CronJob('*/5 * * * *', function () {
-    // if day is sun_with_facedays or saturdays, set status to "It's time to chill"
-    // case hour
+    // Case hour
     switch (new Date().getHours()) {
         case 0, 1, 2, 3, 4, 5, 6, 7, 8, 23, 24:
             publish({
@@ -98,6 +96,7 @@ new CronJob('*/5 * * * *', function () {
             })
             break;
         case 9, 11, 14, 15, 16:
+            // If day is sun_with_facedays or saturdays, set status to "It's time to chill"
             if (new Date().getDay() == 0 || new Date().getDay() == 6) {
                 publish({
                     emoji: 'sun_with_face',
