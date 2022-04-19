@@ -57,8 +57,7 @@ async function publish(message) {
             console.log(response.data)
         }).catch(function (error) {
             console.log(error)
-        }
-        )
+        })
     } catch(error){
         console.log("gitlab:"+error.message)
     }
@@ -84,9 +83,9 @@ async function publish(message) {
             emoji: (emoji)
         }, function (err, res) {
             if (err) {
-            console.log(err)
+                console.log(err)
             } else {
-            console.log(res)
+                console.log(res)
             }
         }
         })
@@ -94,18 +93,16 @@ async function publish(message) {
         console.log("github:"+error.message)
     }
 }
-// Listen to time event every 5 minutes
-var CronJob = require('cron').CronJob
-new CronJob('*/5 * * * *', function () {
-    // Case hour
+
+function Main() {
     switch (new Date().getHours()) {
-        case 0, 1, 2, 3, 4, 5, 6, 7, 8, 23, 24:
+        case 0:case 1:case 2:case 3:case 4:case 5:case 6:case 7:case 8:case 23:case 24:
             publish({
                 emoji: '💤',
                 msg: 'It\'s time to sleep'
             })
-            break
-        case 9, 11, 14, 15, 16:
+            break;
+        case 9:case 11:case 14:case 15:case 16:
             // If day is sun_with_facedays or saturdays, set status to "It's time to chill"
             if (new Date().getDay() == 0 || new Date().getDay() == 6) {
                 publish({
@@ -118,35 +115,35 @@ new CronJob('*/5 * * * *', function () {
                 msg: 'I\'m working on something'
             })
             }
-            break
+            break;
         case 10:
             publish({
                 emoji: '☕',
                 msg: 'Coffee time'
             })
-            break
-        case 12, 13:
+            break;
+        case 12:case 13:
             publish({
                 emoji: '🍔',
                 msg: 'It\'s lunch time'
             })
-            break
+            break;
         case 17:
             publish({
                 emoji: '💾',
                 msg: 'It\'s time to save'
             })
-            break
-        case 18, 19, 20, 21, 22:
+            break;
+        case 18:case 19:case 20:case 21:case 22:
             publish({
                 emoji: '🌞',
                 msg: 'It\'s time to chill'
             })
-            break
+            break;
+        default:
+            console.log(new Date().getHours())
     }
-}, null, true, 'Europe/Paris')
+}
 
-publish({
-    emoji: '🤖',
-    msg: 'Bot is login'
-})
+Main()
+setInterval(Main, 300000)

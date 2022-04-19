@@ -2,7 +2,6 @@
   "dependencies": {
     "@octokit/graphql": "^4.8.0",
     "axios": "^0.25.0",
-    "cron": "^1.8.2",
     "fs": "*"
   }
 }
