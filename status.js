@@ -127,7 +127,7 @@ new CronJob('*/5 * * * *', function () {
                 msg: 'It\'s time to save'
             })
             break;
-        case 2:
+        case 18, 19, 20, 21, 22:
             publish({
                 emoji: 'sun_with_face',
                 msg: 'It\'s time to chill'
