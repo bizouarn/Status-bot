@@ -1,9 +1,5 @@
 # Status-bot 🟢
-## Personal bot for update status on Github and Gitlab
-### Need's
-- MQTT Host 📡
-- Node 📲
-- Fun 😑
+## Bot for auto update status on Github and Gitlab
 ### For use it
 > ### 1# Init
 > ```
@@ -13,7 +9,8 @@
 > ```
  
 > ### 2# Change the code 
-> If you need tu modify status by hour or day in week
+> If you need
+> Modify status by hour or day in week
  
 > ### 3# Start-it
 > ```
