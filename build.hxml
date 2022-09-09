@@ -1,0 +1,5 @@
+-cp src
+-main status.Main
+-js .build/main.js
+
+-cmd node .build/main.js

@@ -14,8 +14,7 @@
  
 > ### 3# Start-it
 > ```
-> npm install
-> node status.js
+> haxe build.hxml
 > ````
 
 > ### 4# Enjoy
