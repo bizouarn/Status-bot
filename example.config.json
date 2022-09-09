@@ -1,0 +1,6 @@
+{
+    "GitlabToken": "XXX",
+    "GithubToken": "XXX",
+    "RefreshTime": 36000,
+    "ClearStatus": 36000
+}
