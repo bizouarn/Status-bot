@@ -1,7 +1,7 @@
 package status;
 
 import status.config.Config;
-import status.services.Gitlab;
+import status.services.*;
 
 class Main{
     static public function main():Void {
