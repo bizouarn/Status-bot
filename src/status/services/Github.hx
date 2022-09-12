@@ -12,12 +12,7 @@ class Github implements IStatus{
     #end
 
     public function new(token:String){
-        trace((graphql:Any));
-        /*github = new graphql({
-            headers: {
-                authorization: 'token ${token}',
-            },
-        });*/
+        this.token = token;
     }
 
     public function setEmoji(emoji:String){
@@ -35,28 +30,16 @@ class Github implements IStatus{
     }
 
     public function publishStatus(){
+        var auth:String = 'bearer '+token;
+        var query:String = 'mutation{changeUserStatus(input:{emoji:"'+emoji+'",message:"'+message+'"}){status{message emoji}}}';
         #if js
-        /*axios.post('https://api.github.com/graphql', {query:`query{__schema}`} ,{
+        axios.post('https://api.github.com/graphql', {
+            query : query
+        }, {
             headers: {
-                'Authorization': "bear " + token,
-                'Content-Type': 'application/json'
+                'Authorization': auth
             }
         });
-        js.Syntax.code("
-        github(`mutation changeUserStatus ($input: ChangeUserStatusInput!) {
-            changeUserStatus (input: $input) {
-                status {
-                    emoji
-                    message
-                }
-            }
-        }`, {
-        input: {
-            message: msg,
-            emoji: (emoji)
-        }
-        })
-        */
         return "";
         #else
         return "Github publish TODO";
