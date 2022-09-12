@@ -1,10 +1,7 @@
 package status.services;
 
 interface IStatus {
-    private var message:String;
-    private var emoji:String;
-
-    public function setEmoji(emoji:String):Void;
-    public function setMessage(emoji:String):Void;
+    public function setEmoji(emoji:String):Bool;
+    public function setMessage(emoji:String):Bool;
     public function publishStatus():String;
 }

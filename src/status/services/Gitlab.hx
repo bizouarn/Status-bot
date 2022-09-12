@@ -4,14 +4,16 @@ class Gitlab implements IStatus{
     private var message:String;
     private var emoji:String;
 
-    public function new(){}
-
-    public function setEmoji(emoji:String){
+    public function new(){
         
     }
 
-    public function setMessage(emoji:String){
+    public function setEmoji(emoji:String){
+        return false;
+    }
 
+    public function setMessage(emoji:String){
+        return false;
     }
 
     public function publishStatus(){

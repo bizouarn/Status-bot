@@ -1,10 +1,17 @@
 package status;
 
+import status.config.Config;
 import status.services.Gitlab;
 
 class Main{
     static public function main():Void {
-        var timer = new haxe.Timer(1000); // 1000ms delay
+        #if js
+        js.Syntax.code("const fs = require('fs')");
+        var config:Config = js.Syntax.code("JSON.parse(fs.readFileSync('./config.json', 'utf8'))");
+        #else
+        var config:Config = haxe.Json.parse(sys.FileSystem.getContent("./config.json"));
+        #end
+        var timer = new haxe.Timer(config.RefreshTime); // 1000ms delay
         timer.run = function() {
             var date = Date.now();
             trace(date.getHours(), "+" + date.getTimezoneOffset());
