@@ -26,8 +26,8 @@ class Main{
         var timer = new haxe.Timer(config.RefreshTime); // 1000ms delay
         timer.run = function() {
             var date = Date.now();
-            trace(date.getHours(), "+" + date.getTimezoneOffset());
-            switch (date.getHours() + date.getTimezoneOffset()) {
+            trace("hour",date.getHours());
+            switch (date.getHours()) {
                 case 0, 1, 2, 3, 4, 5, 6, 7, 8, 23, 24:
                     publish({
                         emoji: '💤',
