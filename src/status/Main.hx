@@ -5,6 +5,7 @@ import status.services.*;
 
 class Main{
     private static var _services:Array<IStatus> = [];
+    private static var _message:Map<String,StatusObj> = new Map();
 
     static public function main():Void {
         #if js
@@ -15,6 +16,11 @@ class Main{
         #else
         var config:Config = haxe.Json.parse(sys.FileSystem.getContent("./config.json"));
         #end
+        for(msg in config.Message){
+            for(msgP in Reflect.fields(msg)){
+                _message.set(msgP,new StatusObj(msgP,Reflect.field(msg, msgP)));
+            }
+        }
 
         if(config.GitlabToken.length > 0){
             Main._services.push(new Gitlab(config.GitlabToken));
@@ -26,60 +32,24 @@ class Main{
         var timer = new haxe.Timer(config.RefreshTime); // 1000ms delay
         timer.run = function() {
             var date = Date.now();
-            trace("hour",date.getHours());
-            switch (date.getHours()) {
-                case 0, 1, 2, 3, 4, 5, 6, 7, 8, 23, 24:
-                    publish({
-                        emoji: '💤',
-                        msg: 'It\'s time to sleep'
-                    });
-                case 9, 11, 14, 15, 16:
-                    // If day is sun_with_facedays or saturdays, set status to "It's time to chill"
-                    if (date.getDay() == 0 || date.getDay() == 6) {
-                        publish({
-                            emoji: '🌞',
-                            msg: 'It\'s time to chill'
-                        });
-                    } else {
-                        publish({
-                            emoji: '💻',
-                            msg: 'I\'m working on something'
-                        });
-                    }
-                case 10:
-                    publish({
-                        emoji: '☕',
-                        msg: 'Coffee time'
-                    });
-                case 12, 13:
-                    publish({
-                        emoji: '🍔',
-                        msg: 'It\'s lunch time'
-                    });
-                case 17:
-                    publish({
-                        emoji: '💾',
-                        msg: 'It\'s time to save'
-                    });
-                case 18, 19, 20, 21, 22:
-                    publish({
-                        emoji: '🌞',
-                        msg: 'It\'s time to chill'
-                    });
-                default:
-                    trace("No status");
+            var hour = date.getHours();
+            var day = date.getDay() - 1;
+            if(day < 0) day = 6;
+            var msgDay = config.Agenda[hour];
+            if(msgDay.length == 1){
+                publish(_message[msgDay[0]]);
+            } else {
+                publish(_message[msgDay[day]]);
             }
         }
         timer.run();
     }
 
-    static function publish(obj:Any){
-        var sm:StatusObj = obj;
-        for(s in Main._services){
-            s.setMessage(sm.msg);
-            s.setEmoji(sm.emoji);
-            trace(s.publishStatus());
-        }
+    static function publish(obj:StatusObj){
         trace(obj);
+        for(s in Main._services){
+            s.setMessage(obj.msg);
+            s.setEmoji(obj.emoji);
+        }
     }
 }
