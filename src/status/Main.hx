@@ -10,8 +10,6 @@ class Main{
     static public function main():Void {
         #if js
         js.Syntax.code("const fs = require('fs')");
-        #end
-        #if js
         var config:Config = js.Syntax.code("JSON.parse(fs.readFileSync('./config.json', 'utf8'))");
         #else
         var config:Config = haxe.Json.parse(sys.FileSystem.getContent("./config.json"));
@@ -22,12 +20,8 @@ class Main{
             }
         }
 
-        if(config.GitlabToken.length > 0){
-            Main._services.push(new Gitlab(config.GitlabToken));
-        }
-        if(config.GithubToken.length > 0){
-            Main._services.push(new Github(config.GithubToken));
-        }
+        if(config.GitlabToken.length > 0) Main._services.push(new Gitlab(config.GitlabToken));
+        if(config.GithubToken.length > 0) Main._services.push(new Github(config.GithubToken));
 
         var timer = new haxe.Timer(config.RefreshTime); // 1000ms delay
         timer.run = function() {
