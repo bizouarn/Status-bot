@@ -4,13 +4,25 @@ import status.config.Config;
 import status.services.*;
 
 class Main{
+    private static var _services:Array<IStatus> = [];
+
     static public function main():Void {
         #if js
         js.Syntax.code("const fs = require('fs')");
+        #end
+        #if js
         var config:Config = js.Syntax.code("JSON.parse(fs.readFileSync('./config.json', 'utf8'))");
         #else
         var config:Config = haxe.Json.parse(sys.FileSystem.getContent("./config.json"));
         #end
+
+        if(config.GitlabToken.length > 0){
+            Main._services.push(new Gitlab(config.GitlabToken));
+        }
+        if(config.GithubToken.length > 0){
+            Main._services.push(new Github(config.GithubToken));
+        }
+
         var timer = new haxe.Timer(config.RefreshTime); // 1000ms delay
         timer.run = function() {
             var date = Date.now();
@@ -58,9 +70,16 @@ class Main{
                     trace("No status");
             }
         }
+        timer.run();
     }
 
     static function publish(obj:Any){
+        var sm:StatusObj = obj;
+        for(s in Main._services){
+            s.setMessage(sm.msg);
+            s.setEmoji(sm.emoji);
+            trace(s.publishStatus());
+        }
         trace(obj);
     }
 }
