@@ -44,6 +44,7 @@ class Main{
         for(s in Main._services){
             s.setMessage(obj.msg);
             s.setEmoji(obj.emoji);
+            s.publishStatus();
         }
     }
 }
