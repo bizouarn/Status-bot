@@ -30,7 +30,9 @@ class Main{
             var day = date.getDay() - 1;
             if(day < 0) day = 6;
             var msgDay = config.Agenda[hour];
-            if(msgDay.length == 1){
+            if(msgDay == null){
+                // TODO
+            } else if(msgDay.length == 1){
                 publish(_message[msgDay[0]]);
             } else {
                 publish(_message[msgDay[day]]);
