@@ -1,7 +1,7 @@
 package status.services;
 
 interface IStatus {
-    public function setEmoji(emoji:String):Bool;
-    public function setMessage(message:String):Bool;
-    public function publishStatus():String;
+	function setEmoji(emoji:String):Bool;
+	function setMessage(message:String):Bool;
+	function publishStatus():String;
 }
