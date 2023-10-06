@@ -25,6 +25,19 @@ class Main{
 		var timer = new haxe.Timer(config.RefreshTime); // 1000ms delay
 		timer.run = function() {
 			var date = Date.now();
+			if(config.Dates != null){
+				var dateMsg = Reflect.field(config.Dates, DateTools.format(date,"%d-%m-%Y"));
+				if(dateMsg != null){
+					publish(_message[dateMsg]);
+					return;
+				}
+				dateMsg = Reflect.field(config.Dates, DateTools.format(date,"%d-%m"));
+				if(dateMsg != null){
+					publish(_message[dateMsg]);
+					return;
+				}
+			}
+
 			var hour = date.getHours();
 			var day = date.getDay() - 1;
 			if(day < 0) day = 6;

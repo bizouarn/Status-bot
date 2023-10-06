@@ -10,7 +10,8 @@
         {"🍔":"It's lunch time"},
         {"💾":"It's time to save"},
         {"💤":"It's time to sleep"},
-        {"🚴‍":"On a bicycle"}
+        {"🚴‍":"On a bicycle"},
+        {"🎆":"Happy new year"}
     ],
     "Agenda":[
         ["💤"],
@@ -36,5 +37,8 @@
         ["🌞"],
         ["🌞"],
         ["💤"]   
-    ]
+    ],
+    "Dates": {
+        "01-01":"🎆"
+    }
 }

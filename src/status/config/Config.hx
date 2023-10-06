@@ -7,6 +7,7 @@ class Config{
 	public var ClearStatus:Int;
 	public var Message:Array<String>;
 	public var Agenda:Array<Array<String>>;
+	public var Dates:Dynamic;
 
 	public function new(){}
 }
