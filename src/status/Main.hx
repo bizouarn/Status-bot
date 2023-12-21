@@ -54,11 +54,15 @@ class Main{
 	}
 
 	static function publish(obj:StatusObj){
-		trace(obj);
-		for(s in Main._services){
-			s.setMessage(obj.msg);
-			s.setEmoji(obj.emoji);
-			s.publishStatus();
+		try {
+			trace(obj);
+			for(s in Main._services){
+				s.setMessage(obj.msg);
+				s.setEmoji(obj.emoji);
+				s.publishStatus();
+			}
+		} catch(e) {
+			trace(e.message);
 		}
 	}
 }
