@@ -1,4 +1,6 @@
 # Status-bot 🟢
+## ⚠️ Project Archived - Not maintained ⚠️
+> This project is no longer maintained. It is based on an obsolete version of Node.js and no longer works with recent versions. It will not be updated.
 ## Bot for auto update status on Github and Gitlab
 ### For use it
 ### 1# Init
